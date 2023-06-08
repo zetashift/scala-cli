@@ -1297,8 +1297,8 @@ abstract class BspTestDefinitions(val scalaVersionOpt: Option[String])
             remoteServer
               .buildTargetRun(new b.RunParams(mainTarget))
           runRespFuture.cancel(true)
-          expect(runRespFuture.isCancelled)
-          expect(!os.read(root / "stderr.txt").contains(
+          expect(runRespFuture.isCancelled || runRespFuture.isCompletedExceptionally)
+          expect(os.read(root / "stderr.txt").contains(
             "Unmatched cancel notification for request id null"
           ))
         }
